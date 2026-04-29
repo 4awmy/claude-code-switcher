@@ -11,12 +11,13 @@ function claude-switch {
         Write-Host "Clearing OpenRouter overrides... Switching to native Anthropic." -ForegroundColor Yellow
         if (Test-Path Env:ANTHROPIC_BASE_URL) { Remove-Item Env:ANTHROPIC_BASE_URL }
         if (Test-Path Env:ANTHROPIC_AUTH_TOKEN) { Remove-Item Env:ANTHROPIC_AUTH_TOKEN }
+        if (Test-Path Env:ANTHROPIC_API_KEY) { Remove-Item Env:ANTHROPIC_API_KEY }
         claude
 
     } elseif ($choice -eq "2") {
         Write-Host "========================================" -ForegroundColor Cyan
         Write-Host " Select a Reliable Free Model: "
-        Write-Host "1) Google Gemma 3 (Working Now!)"
+        Write-Host "1) Google Gemma 3 (Recommended)"
         Write-Host "2) Meta Llama 3.3 70B (High Logic)"
         Write-Host "3) Qwen 2.5 Coder (Fast)"
         Write-Host "4) Mistral 7B (Lightweight)"
@@ -34,11 +35,13 @@ function claude-switch {
         }
 
         Write-Host "Applying OpenRouter overrides..." -ForegroundColor Green
-        $Env:ANTHROPIC_BASE_URL = "https://openrouter.ai/api/v1"
+        
+        # CRITICAL FIXES FOR OPENROUTER
+        $Env:ANTHROPIC_BASE_URL = "https://openrouter.ai/api"
         $Env:ANTHROPIC_AUTH_TOKEN = "YOUR_OPENROUTER_API_KEY"
+        $Env:ANTHROPIC_API_KEY = "" # Must be empty to bypass native auth
         
         Write-Host "Launching Claude Code with model: $model" -ForegroundColor Green
-        Write-Host "(Note: Free models can be slow or rate-limited. If it doesn't reply, try Option 1.)" -ForegroundColor Gray
         claude --model "$model"
 
     } else {
