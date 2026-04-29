@@ -1,9 +1,9 @@
 
 function claude-switch {
     Write-Host "========================================" -ForegroundColor Cyan
-    Write-Host "🤖 Choose your Claude Code Brain:"
-    Write-Host "1) 🟡 Regular Claude Pro ($20 Account)"
-    Write-Host "2) 🟢 OpenRouter (Free Coding Models)"
+    Write-Host " Claude Code Brain Switcher "
+    Write-Host "1) Regular Claude Pro ($20 Account)"
+    Write-Host "2) OpenRouter (Free Coding Models)"
     Write-Host "========================================" -ForegroundColor Cyan
     $choice = Read-Host "Enter 1 or 2"
 
@@ -15,11 +15,11 @@ function claude-switch {
 
     } elseif ($choice -eq "2") {
         Write-Host "========================================" -ForegroundColor Cyan
-        Write-Host "🛠️ Select a Free OpenRouter Model:"
-        Write-Host "1) Tencent Hy3 Preview (Best overall logic)"
-        Write-Host "2) NVIDIA Nemotron 3 (Best for complex architecture)"
-        Write-Host "3) inclusionAI Ling (Best for fast execution)"
-        Write-Host "4) Qwen 3 Coder (Best for raw speed)"
+        Write-Host " Select a Free OpenRouter Model: "
+        Write-Host "1) Tencent Hy3 Preview (Best logic)"
+        Write-Host "2) NVIDIA Nemotron 3 (Architecture)"
+        Write-Host "3) inclusionAI Ling (Fast)"
+        Write-Host "4) Qwen 3 Coder (Raw speed)"
         Write-Host "5) Enter a custom model ID"
         Write-Host "========================================" -ForegroundColor Cyan
         $mod_choice = Read-Host "Enter 1-5"
@@ -38,6 +38,7 @@ function claude-switch {
         $Env:ANTHROPIC_AUTH_TOKEN = "YOUR_OPENROUTER_API_KEY"
         
         Write-Host "Launching Claude Code with model: $model" -ForegroundColor Green
+        Write-Host "(Note: If you see an 'Auth conflict' warning, you can ignore it or run 'claude /logout' first.)" -ForegroundColor Gray
         claude --model "$model"
 
     } else {
